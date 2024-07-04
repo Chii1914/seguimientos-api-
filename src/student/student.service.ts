@@ -2,8 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from '../user/schema/user.schema';
+
 @Injectable()
 export class StudentService {
+
+  //constructor(@InjectModel('User') private userModel: Model<User>) {}
   create(createStudentDto: CreateStudentDto) {
     return 'This action adds a new student';
   }
