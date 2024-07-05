@@ -3,27 +3,54 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { Roles } from 'src/common/roles/roles.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { CustomGoogleAuthGuard } from 'src/guards/oauth.guard';
+import { v4 as uuidv4 } from 'uuid'; // Assuming you're using UUIDs for random strings
+import { SessionAuthGuard } from 'src/guards/session-auth.guard';
+import * as jwt from 'jsonwebtoken';
+
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from '../user/schema/user.schema';
 
 @Controller('auth')
 export class AuthController {
+  constructor(@InjectModel('User') private userModel: Model<User>) { }
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {
     // Initiates the Google OAuth flow
   }
+  //res.redirect(`${process.env.FRONTEND_URL}/success?token=${req.user.jwt}`);   googleAuthRedirect(@Req() req, @Res() res: Response) {
+
 
   @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req, @Res() res: Response) {
-   //Crear redirección aquí cuando falle la autenticación
-    res.redirect(`${process.env.FRONTEND_URL}/success?token=${req.user.jwt}`);
+  @UseGuards(CustomGoogleAuthGuard)
+  async googleAuthRedirect(@Req() req, @Res() res: Response) {
+    try {
+      const randomString = uuidv4();
+      await this.userModel.updateOne({ email: req.user.email }, { $set: { SessionString: randomString } }, { upsert: true });
+      await this.userModel.updateOne({ email: req.user.email }, { $set: { Gtoken: req.user.jwt } }, { upsert: true });
+      if (!res.headersSent) {
+        return res.redirect(`${process.env.FRONTEND_URL}/success?xvlf=${randomString}`);
+      }
+    } catch (err) {
+
+      if (!res.headersSent) {
+        return res.status(500).json({ message: 'An error occurred' });
+      }
+    }
+  }
+
+  @Get('protected')
+  @UseGuards(SessionAuthGuard)
+  greet(@Req() req) {
+    return "uwu";
   }
 
   @Get('verify')
-  @UseGuards(JwtAuthGuard)
-  @Roles('alumno')
-  verifyAlumno(){ return true; }
+  @UseGuards(SessionAuthGuard)
+  verifyAlumno() { return true; }
 
 
   /* otra manera
