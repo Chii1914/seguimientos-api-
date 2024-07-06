@@ -1,0 +1,13 @@
+{
+    "name": "John Doe",
+    "rut": "123456789",
+    "email": "johndoe@example.com",
+    "sede": "Valparaíso",
+    "semester": "Primer Semestre",
+    "phone": "123-456-7890",
+    "location": "Building A, Room 101",
+    "academicCharacter": "Good",
+    "healthReason": "None",
+    "socialReason": "None",
+    "remedialAction": "None"
+}

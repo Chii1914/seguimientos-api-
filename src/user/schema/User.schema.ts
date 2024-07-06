@@ -6,8 +6,7 @@ export class User {
 
     @Prop({unique: true, required: true})
     email: string;
-    
-    //Token para la posterior autenticación
+
     @Prop({required: false})
     Gtoken: string;
 
@@ -16,9 +15,9 @@ export class User {
     SessionString: string;
 
     @Prop({required: true})
-    nombre: string;
+    name: string;
 
-    @Prop({required: true})
+    @Prop({required: true, enum: ['Valparaíso', 'Santiago', 'San Felipe', 'all']})
     sede: string;
 
     @Prop({required: true})
