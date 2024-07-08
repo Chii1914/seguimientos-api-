@@ -7,7 +7,7 @@ export class CreateUserDto {
     @IsEnum(['Valparaíso', 'Santiago', 'San Felipe', 'all'])
     sede: string;
     @IsString() 
-    nombre: string;
+    name: string;
     @IsString()
     apellido_paterno: string;
     @IsString()
