@@ -1,9 +1,6 @@
 import { IsString, IsDate, IsNotEmpty } from 'class-validator';
 
 export class CreateFollowUpDto {
-  @IsString()
-  @IsNotEmpty()
-  follow_up_id: string;
 
   @IsDate()
   @IsNotEmpty()
@@ -15,9 +12,5 @@ export class CreateFollowUpDto {
 }
 
 export class AddFollowUpDto {
-  @IsString()
-  @IsNotEmpty()
-  rut: string;
-
   follow_up: CreateFollowUpDto;
 }

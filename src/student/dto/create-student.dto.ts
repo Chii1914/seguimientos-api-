@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsNotEmpty, IsArray, ValidateNested } from 'class-validator';
+import { IsString, IsEnum, IsNotEmpty, IsArray, ValidateNested, IsOptional, IsEmail } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateFollowUpDto } from '../../follow-up/dto/create-follow-up.dto';
 
@@ -16,6 +16,10 @@ export class CreateStudentDto {
   @IsNotEmpty()
   phone: string;
 
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
   @IsString()
   @IsNotEmpty()
   location: string;
@@ -45,6 +49,7 @@ export class CreateStudentDto {
   @IsEnum(['Valparaíso', 'Santiago', 'San Felipe'])
   sede: string;
 
+  @IsOptional() 
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateFollowUpDto)
@@ -60,6 +65,10 @@ export class UpdateStudentDto {
   @IsNotEmpty()
   @IsEnum(['Primer Semestre', 'Segundo Semestre', 'Tercer Semestre', 'Cuarto Semestre', 'Quinto Semestre', 'Sexto Semestre', 'Séptimo Semestre', 'Octavo Semestre', 'Noveno Semestre', 'Décimo Semestre'])
   semester: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
   @IsString()
   @IsNotEmpty()
@@ -94,6 +103,7 @@ export class UpdateStudentDto {
   @IsEnum(['Valparaíso', 'Santiago', 'San Felipe'])
   sede: string;
 
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateFollowUpDto)

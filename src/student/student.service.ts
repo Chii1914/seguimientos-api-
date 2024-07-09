@@ -22,17 +22,12 @@ export class StudentService {
     return await this.studentModel.find();
   }
 
-  async addFollowUp(rut: string, followUpDto: CreateFollowUpDto): Promise<Student> {
-    const student = await this.studentModel.findOne({ rut });
+  async addFollowUp(id: string, followUpDto: CreateFollowUpDto): Promise<Student> {
+    const student = await this.studentModel.findById(id);
     if (!student) {
       throw new NotFoundException('Student not found');
     }
-
-    const followUpExists = student.follow_ups.some(followUp => followUp.follow_up_id === followUpDto.follow_up_id);
-    if (followUpExists) {
-      throw new BadRequestException('Follow-up ID must be unique');
-    }
-
+    
     student.follow_ups.push(followUpDto);
     return student.save();
   }

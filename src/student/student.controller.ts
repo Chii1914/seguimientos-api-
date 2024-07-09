@@ -17,8 +17,8 @@ export class StudentController {
 
   @Post('add-follow-up')
   @UseGuards(SessionAuthGuard)
-  async addFollowUp(@Body() addFollowUpDto: { rut: string, follow_up: CreateFollowUpDto }) {
-    return this.studentService.addFollowUp(addFollowUpDto.rut, addFollowUpDto.follow_up);
+  async addFollowUp(@Body() addFollowUpDto: { id: string, follow_up: CreateFollowUpDto }) {
+    return this.studentService.addFollowUp(addFollowUpDto.id, addFollowUpDto.follow_up);
   }
 
   @Get(':rut/follow-ups')
