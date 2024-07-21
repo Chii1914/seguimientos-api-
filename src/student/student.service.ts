@@ -13,7 +13,6 @@ export class StudentService {
 
   constructor(@InjectModel('Student') private studentModel: Model<Student>) { }
 
-  //constructor(@InjectModel('User') private userModel: Model<User>) {}
   async create(createStudentDto: CreateStudentDto) {
     return await this.studentModel.create(createStudentDto);
   }
@@ -32,8 +31,8 @@ export class StudentService {
     return student.save();
   }
 
-  async getFollowUps(rut: string): Promise<FollowUp[]> {
-    const student = await this.studentModel.findOne({ rut }).exec();
+  async getFollowUps(id: string): Promise<FollowUp[]> {
+    const student = await this.studentModel.findById(id).exec();
     if (!student) {
       throw new NotFoundException('Student not found');
     }

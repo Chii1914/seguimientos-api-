@@ -21,10 +21,10 @@ export class StudentController {
     return this.studentService.addFollowUp(addFollowUpDto.id, addFollowUpDto.follow_up);
   }
 
-  @Get(':rut/follow-ups')
+  @Get(':id/follow-ups')
   @UseGuards(SessionAuthGuard)
-  async getFollowUps(@Param('rut') rut: string) {
-    return this.studentService.getFollowUps(rut);
+  async getFollowUps(@Param('id') id: string) {
+    return this.studentService.getFollowUps(id);
   }
 
   @Get()

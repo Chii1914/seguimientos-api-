@@ -1,6 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { FollowUp, FollowUpSchema } from '../../follow-up/schema/follow-up.schema';  // Adjust the import path as necessary
+import { FollowUp, FollowUpSchema } from '../../follow-up/schema/follow-up.schema';  
+
 @Schema()
 export class Student extends Document {
 
