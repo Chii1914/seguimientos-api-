@@ -1,18 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { UploadedFiles, Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { SessionAuthGuard } from 'src/guards/session-auth.guard';
 import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('student')
 export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
-  
+  constructor(private readonly studentService: StudentService) { }
+
   @Post()
   @UseGuards(SessionAuthGuard)
-  create(@Body() createStudentDto: CreateStudentDto) {
+  async create(@Body() createStudentDto: CreateStudentDto) {
     return this.studentService.create(createStudentDto);
+  }
+
+  @Post('files/:id')
+  @UseGuards(SessionAuthGuard)
+  @UseInterceptors(AnyFilesInterceptor())
+  async uploadFiles(@Param('id') id: string, @UploadedFiles() files: Express.Multer.File[]) {
+    return this.studentService.saveStudentFiles(id, files);
   }
 
   @Post('add-follow-up')

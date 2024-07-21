@@ -17,6 +17,14 @@ export class StudentService {
     return await this.studentModel.create(createStudentDto);
   }
 
+  async saveStudentFiles(id: string, files: Express.Multer.File[]) {
+    console.log('Uploaded files:', files);
+
+    // Implement your logic to store files
+    return { message: 'Student files uploaded successfully' };
+  } 
+
+
   async findAll() {
     return await this.studentModel.find();
   }
