@@ -8,10 +8,6 @@ export class CreateStudentDto {
   rut: string;
 
   @IsString()
-  @IsNotEmpty() 
-  thumbnail?: string;
-
-  @IsString()
   @IsNotEmpty()
   @IsEnum(['Primer Semestre', 'Segundo Semestre', 'Tercer Semestre', 'Cuarto Semestre', 'Quinto Semestre', 'Sexto Semestre', 'Séptimo Semestre', 'Octavo Semestre', 'Noveno Semestre', 'Décimo Semestre'])
   semester: string;

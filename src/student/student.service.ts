@@ -8,21 +8,40 @@ import { Student } from '../student/schema/Student.schema';
 import { FollowUp } from 'src/follow-up/schema/follow-up.schema';
 import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
 
+import * as fs from 'fs';
+import * as path from 'path';
+import { throwError } from 'rxjs';
+
+
 @Injectable()
 export class StudentService {
 
   constructor(@InjectModel('Student') private studentModel: Model<Student>) { }
+
+  private readonly uploadPath = path.join(__dirname, '..', 'public');
 
   async create(createStudentDto: CreateStudentDto) {
     return await this.studentModel.create(createStudentDto);
   }
 
   async saveStudentFiles(id: string, files: Express.Multer.File[]) {
-    console.log('Uploaded files:', files);
 
-    // Implement your logic to store files
+    try {
+      const studentUploadPath = path.join(this.uploadPath, id);
+      if (!fs.existsSync(studentUploadPath)) {
+        fs.mkdirSync(studentUploadPath, { recursive: true });
+      }
+
+      for (const file of files) {
+        const filePath = path.join(studentUploadPath, file.originalname);
+        fs.writeFileSync(filePath, file.buffer);
+      }
+    }catch(e){
+      console.log(e);
+      new BadRequestException('Error saving files');
+    }
     return { message: 'Student files uploaded successfully' };
-  } 
+  }
 
 
   async findAll() {
@@ -34,7 +53,7 @@ export class StudentService {
     if (!student) {
       throw new NotFoundException('Student not found');
     }
-    
+
     student.follow_ups.push(followUpDto);
     return student.save();
   }
