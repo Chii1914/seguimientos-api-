@@ -10,7 +10,6 @@ import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { throwError } from 'rxjs';
 
 
 @Injectable()
@@ -25,18 +24,16 @@ export class StudentService {
   }
 
   async saveStudentFiles(id: string, files: Express.Multer.File[]) {
-
     try {
       const studentUploadPath = path.join(this.uploadPath, id);
       if (!fs.existsSync(studentUploadPath)) {
         fs.mkdirSync(studentUploadPath, { recursive: true });
       }
-
       for (const file of files) {
         const filePath = path.join(studentUploadPath, file.originalname);
         fs.writeFileSync(filePath, file.buffer);
       }
-    }catch(e){
+    } catch (e) {
       console.log(e);
       new BadRequestException('Error saving files');
     }
