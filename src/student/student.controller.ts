@@ -11,28 +11,33 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) { }
 
   @Post()
-  @UseGuards(SessionAuthGuard)
+  //@UseGuards(SessionAuthGuard)
   async create(@Body() createStudentDto: CreateStudentDto) {
     return this.studentService.create(createStudentDto);
   }
 
   @Post('files/:id')
-  @UseGuards(SessionAuthGuard)
+  //@UseGuards(SessionAuthGuard)
   @UseInterceptors(AnyFilesInterceptor())
   async uploadFiles(@Param('id') id: string, @UploadedFiles() files: Express.Multer.File[]) {
     return this.studentService.saveStudentFiles(id, files);
   }
 
   @Post('add-follow-up')
-  @UseGuards(SessionAuthGuard)
+  //@UseGuards(SessionAuthGuard)
   async addFollowUp(@Body() addFollowUpDto: { id: string, follow_up: CreateFollowUpDto }) {
     return this.studentService.addFollowUp(addFollowUpDto.id, addFollowUpDto.follow_up);
   }
 
   @Get(':id/follow-ups')
-  @UseGuards(SessionAuthGuard)
+  //@UseGuards(SessionAuthGuard)
   async getFollowUps(@Param('id') id: string) {
     return this.studentService.getFollowUps(id);
+  }
+
+  @Get(':id/filenames')
+  async getFilenames(@Param('id') id: string) {
+    return this.studentService.getFilenames(id);
   }
 
   @Get()
@@ -48,7 +53,7 @@ export class StudentController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(+id, updateStudentDto);
+    return this.studentService.update(id, updateStudentDto);
   }
 
   @Delete(':id')

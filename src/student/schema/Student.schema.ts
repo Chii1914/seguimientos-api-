@@ -8,7 +8,7 @@ export class Student extends Document {
   @Prop({ unique: true, required: true })
   rut: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({ unique: true, required: true, enum: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'K'] })
   df: string;
 
   @Prop({ unique: false, required: true, enum: ['Primer Semestre', 'Segundo Semestre', 'Tercer Semestre', 'Cuarto Semestre', 'Quinto Semestre', 'Sexto Semestre', 'Séptimo Semestre', 'Octavo Semestre', 'Noveno Semestre', 'Décimo Semestre'] })

@@ -40,6 +40,16 @@ export class StudentService {
     return { message: 'Student files uploaded successfully' };
   }
 
+  async getFilenames(id: string) { 
+    const studentUploadPath = path.join(this.uploadPath, id);
+    if (!fs.existsSync
+    (studentUploadPath)) {
+      throw new NotFoundException('Student not found');
+    }
+    return fs.readdirSync(studentUploadPath);
+  }
+  
+
 
   async findAll() {
     return await this.studentModel.find();
@@ -67,10 +77,14 @@ export class StudentService {
     return `This action returns a #${id} student`;
   }
 
-  update(id: number, updateStudentDto: UpdateStudentDto) {
-    return `This action updates a #${id} student`;
+  async update(id: string, updateStudentDto: UpdateStudentDto) {
+    const student = await this.studentModel.findById(id);
+    if (!student) {
+      throw new NotFoundException('Student not found');
+    }  
+    Object.assign(student, updateStudentDto);  
+    return student.save();
   }
-
   remove(id: number) {
     return `This action removes a #${id} student`;
   }
