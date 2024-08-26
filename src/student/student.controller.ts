@@ -36,7 +36,7 @@ export class StudentController {
   }
 
   @Get()
-  @UseGuards(SessionAuthGuard)
+  //@UseGuards(SessionAuthGuard)
   findAll() {
     return this.studentService.findAll();
   }

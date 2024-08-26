@@ -8,6 +8,9 @@ export class Student extends Document {
   @Prop({ unique: true, required: true })
   rut: string;
 
+  @Prop({ unique: true, required: true })
+  df: string;
+
   @Prop({ unique: false, required: true, enum: ['Primer Semestre', 'Segundo Semestre', 'Tercer Semestre', 'Cuarto Semestre', 'Quinto Semestre', 'Sexto Semestre', 'Séptimo Semestre', 'Octavo Semestre', 'Noveno Semestre', 'Décimo Semestre'] })
   semester: string;
 
@@ -34,6 +37,15 @@ export class Student extends Document {
 
   @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true })
+  secondName: string;
+
+  @Prop({ required: true })
+  fatherLastName: string;
+
+  @Prop({ required: true })
+  motherLastName :string
 
   @Prop({ required: true, enum: ['Valparaíso', 'Santiago', 'San Felipe'] })
   sede: string;

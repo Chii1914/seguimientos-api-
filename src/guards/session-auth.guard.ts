@@ -19,7 +19,7 @@ export class SessionAuthGuard implements CanActivate {
 
     private async validateRequest(request: Request): Promise<boolean> {
         try {
-            const authToken = request.headers['authorization']?.split(' ')[1]; // Assuming a "Bearer" token
+            const authToken = request.headers['authorization']?.split(' ')[1]; 
 
             if (!authToken) {
                 return false;

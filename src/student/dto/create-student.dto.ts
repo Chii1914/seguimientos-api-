@@ -9,6 +9,10 @@ export class CreateStudentDto {
 
   @IsString()
   @IsNotEmpty()
+  df: string;
+
+  @IsString()
+  @IsNotEmpty()
   @IsEnum(['Primer Semestre', 'Segundo Semestre', 'Tercer Semestre', 'Cuarto Semestre', 'Quinto Semestre', 'Sexto Semestre', 'Séptimo Semestre', 'Octavo Semestre', 'Noveno Semestre', 'Décimo Semestre'])
   semester: string;
 
@@ -43,6 +47,18 @@ export class CreateStudentDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  secondName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  fatherLastName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  motherLastName: string;
 
   @IsString()
   @IsNotEmpty()
