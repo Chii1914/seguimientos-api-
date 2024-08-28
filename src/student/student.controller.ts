@@ -40,6 +40,11 @@ export class StudentController {
     return this.studentService.getFilenames(id);
   }
 
+  @Get('file/:id')
+  async getFile(@Param('id') id: string, @Body() body: { filename: string }) {
+    return this.studentService.getFile(id, body.filename);
+  }
+
   @Get()
   //@UseGuards(SessionAuthGuard)
   findAll() {

@@ -35,21 +35,43 @@ export class StudentService {
       }
     } catch (e) {
       console.log(e);
-      new BadRequestException('Error saving files');
+      throw new BadRequestException('Error saving files');
     }
     return { message: 'Student files uploaded successfully' };
   }
 
-  async getFilenames(id: string) { 
+  async getFilenames(id: string) {
     const studentUploadPath = path.join(this.uploadPath, id);
     if (!fs.existsSync
-    (studentUploadPath)) {
+      (studentUploadPath)) {
       throw new NotFoundException('Student not found');
     }
     return fs.readdirSync(studentUploadPath);
   }
-  
 
+  async getFile(id: string, filename: string) {
+    if (filename == null) {
+      throw new BadRequestException('Filename is required');
+      
+    }
+    if (filename.includes('/') || filename.includes('\\')) {
+      throw new BadRequestException('Invalid filename');
+      
+    }
+    if (filename.includes('..')) {
+      throw new BadRequestException('Invalid filename');
+
+    }
+    const studentUploadPath = path.join(this.uploadPath, id);
+    if (!fs.existsSync(studentUploadPath)) {
+      throw new NotFoundException('Student not found');
+    }
+    const filePath = path.join(studentUploadPath, filename);
+    if (!fs.existsSync(filePath)) {
+      throw new NotFoundException('File not found');
+    }
+    return fs.readFileSync(filePath);
+  }
 
   async findAll() {
     return await this.studentModel.find();
@@ -81,8 +103,8 @@ export class StudentService {
     const student = await this.studentModel.findById(id);
     if (!student) {
       throw new NotFoundException('Student not found');
-    }  
-    Object.assign(student, updateStudentDto);  
+    }
+    Object.assign(student, updateStudentDto);
     return student.save();
   }
   remove(id: number) {
