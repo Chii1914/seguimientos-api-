@@ -10,6 +10,7 @@ import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { File } from 'multer';
 
 
 @Injectable()
@@ -23,12 +24,14 @@ export class StudentService {
     return await this.studentModel.create(createStudentDto);
   }
 
-  async saveStudentFiles(id: string, files: Express.Multer.File[]) {
+  async saveStudentFiles(id: string, files: File[]) {
     try {
       const studentUploadPath = path.join(this.uploadPath, id);
+
       if (!fs.existsSync(studentUploadPath)) {
         fs.mkdirSync(studentUploadPath, { recursive: true });
       }
+
       for (const file of files) {
         const filePath = path.join(studentUploadPath, file.originalname);
         fs.writeFileSync(filePath, file.buffer);
@@ -37,6 +40,7 @@ export class StudentService {
       console.log(e);
       throw new BadRequestException('Error saving files');
     }
+
     return { message: 'Student files uploaded successfully' };
   }
 
@@ -52,11 +56,11 @@ export class StudentService {
   async getFile(id: string, filename: string) {
     if (filename == null) {
       throw new BadRequestException('Filename is required');
-      
+
     }
     if (filename.includes('/') || filename.includes('\\')) {
       throw new BadRequestException('Invalid filename');
-      
+
     }
     if (filename.includes('..')) {
       throw new BadRequestException('Invalid filename');

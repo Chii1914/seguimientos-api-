@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsNotEmpty, IsArray, ValidateNested, IsOptional, IsEmail } from 'class-validator';
+import { IsString, IsEnum, IsNotEmpty, IsArray, ValidateNested, IsOptional, IsEmail, IsBoolean } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateFollowUpDto } from '../../follow-up/dto/create-follow-up.dto';
 
@@ -30,22 +30,6 @@ export class CreateStudentDto {
 
   @IsString()
   @IsNotEmpty()
-  academicCharacter: string;
-
-  @IsString()
-  @IsNotEmpty()
-  healthReason: string;
-
-  @IsString()
-  @IsNotEmpty()
-  socialReason: string;
-
-  @IsString()
-  @IsNotEmpty()
-  remedialAction: string;
-
-  @IsString()
-  @IsNotEmpty()
   name: string;
 
   @IsString()
@@ -65,13 +49,104 @@ export class CreateStudentDto {
   @IsEnum(['Valparaíso', 'Santiago', 'San Felipe'])
   sede: string;
 
-  @IsOptional() 
+  @IsBoolean()
+  @IsNotEmpty()
+  consumoSustancias: boolean;
+
+  @IsOptional() // Justification can be "none" or filled if necessary
+  @IsString()
+  justConsumoSustancias: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  convivencia: boolean;
+
+  @IsOptional()
+  @IsString()
+  justConvivencia: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  emocionalYAcademico: boolean;
+
+  @IsOptional()
+  @IsString()
+  justEmocionalYAcademico: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  emocional: boolean;
+
+  @IsOptional()
+  @IsString()
+  justEmocional: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  academico: boolean;
+
+  @IsOptional()
+  @IsString()
+  justAcademico: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  uvinclusiva: boolean;
+
+  @IsOptional()
+  @IsString()
+  justUvinclusiva: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  abuso: boolean;
+
+  @IsOptional()
+  @IsString()
+  justAbuso: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  economicos: boolean;
+
+  @IsOptional()
+  @IsString()
+  justEconomicos: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  economicoEmocionalAcademico: boolean;
+
+  @IsOptional()
+  @IsString()
+  justEconomicoEmocionalAcademico: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  economicoEmocional: boolean;
+
+  @IsOptional()
+  @IsString()
+  justEconomicoEmocional: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  economicoAcademico: boolean;
+
+  @IsOptional()
+  @IsString()
+  justEconomicoAcademico: string;
+
+  @IsOptional()
+  @IsString()
+  remedialAction: string;
+
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateFollowUpDto)
   follow_ups: CreateFollowUpDto[];
 }
-
 export class UpdateStudentDto {
   @IsString()
   @IsNotEmpty()
@@ -93,18 +168,6 @@ export class UpdateStudentDto {
   @IsString()
   @IsNotEmpty()
   location: string;
-
-  @IsString()
-  @IsNotEmpty()
-  academicCharacter: string;
-
-  @IsString()
-  @IsNotEmpty()
-  healthReason: string;
-
-  @IsString()
-  @IsNotEmpty()
-  socialReason: string;
 
   @IsString()
   @IsNotEmpty()

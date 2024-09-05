@@ -22,16 +22,7 @@ export class Student extends Document {
 
   @Prop({ required: true })
   location: string;
-
-  @Prop({ required: true })
-  academicCharacter: string;
-
-  @Prop({ required: true })
-  healthReason: string;
-
-  @Prop({ required: true })
-  socialReason: string;
-
+  
   @Prop({ required: true })
   remedialAction: string;
 
