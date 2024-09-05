@@ -52,6 +52,75 @@ export class Student extends Document {
 
   @Prop({ type: [FollowUpSchema], default: [] })
   follow_ups: Types.Array<FollowUp>;
+
+  //Motivos de ingreso 
+
+  //Consumo problemático de sustanacias
+  @Prop({ required: true })
+  consumoSustancias: Boolean;
+  @Prop({ required: true })
+  justConsumoSustancias: String;
+
+  //Convivencia y buen trato en la carrera
+  @Prop({ required: true })
+  convivencia: Boolean;
+  @Prop({ required: true })
+  justConvivencia: String;
+
+  //Emocional y académico
+  @Prop({ required: true })
+  emocionalYAcademico: Boolean;
+  @Prop({ required: true })
+  justEmocionalYAcademico: String;
+
+  //Solo emocional
+  @Prop({ required: true })
+  emocional: Boolean;
+  @Prop({ required: true })
+  justEmocional: String;
+
+  //Solo académico
+  @Prop({ required: true })
+  academico: Boolean;
+  @Prop({ required: true }) 
+  justAcademico: String;
+
+  //Uv inclusiva (neurodivergencia) con autorización del estudiante
+  @Prop({ required: true })
+  uvinclusiva: Boolean;
+  @Prop({ required: true })
+  justUvinclusiva: String;
+
+  //Violencia física-psicológica, abuso
+  @Prop({ required: true })
+  abuso: Boolean;
+  @Prop({ required: true })
+  justAbuso: String;
+
+  //Económicos
+  @Prop({ required: true })
+  economicos: Boolean;
+  @Prop({ required: true })
+  justEconomicos: String;
+
+  //Económico, emocional y académico
+  @Prop({ required: true })
+  economicoEmocionalAcademico: Boolean;
+  @Prop({ required: true }) 
+  justEconomicoEmocionalAcademico: String;
+
+  //Económicos y emoconal 
+  @Prop({ required: true })
+  economicoEmocional: Boolean;
+  @Prop({ required: true })
+  justEconomicoEmocional: String;
+
+  //Económico y académico
+  @Prop({ required: true })
+  economicoAcademico: Boolean;
+  @Prop({ required: true })
+  justEconomicoAcademico: String;
+
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);
