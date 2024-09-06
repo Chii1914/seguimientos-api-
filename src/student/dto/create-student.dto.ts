@@ -20,6 +20,10 @@ export class CreateStudentDto {
   @IsNotEmpty()
   phone: string;
 
+  @IsOptional()
+  @IsBoolean()
+  state: boolean;
+
   @IsEmail()
   @IsNotEmpty()
   email: string;

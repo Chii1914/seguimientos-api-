@@ -10,8 +10,11 @@ import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { File } from 'multer';
+import { Multer } from 'multer';
 
+interface CustomFile extends Express.Multer.File {
+  originalname: string;
+}
 
 @Injectable()
 export class StudentService {
@@ -24,7 +27,7 @@ export class StudentService {
     return await this.studentModel.create(createStudentDto);
   }
 
-  async saveStudentFiles(id: string, files: File[]) {
+  async saveStudentFiles(id: string, files: CustomFile[]) {
     try {
       const studentUploadPath = path.join(this.uploadPath, id);
 

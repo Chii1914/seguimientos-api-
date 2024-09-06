@@ -12,44 +12,70 @@ export class FollowUp extends Document {
   @Prop()
   notes: string;
 
+  @Prop({ required: true })
+  asistentaSocial: boolean;
+
   @Prop()
-  place: string;
+  justAsistentaSocial: string;
+
+  @Prop({ required: true })
+  ajusteAcademico: boolean;
+
+  @Prop()
+  justAjusteAcademico: string;
+
+  @Prop({ required: true })
+  documentoRespaldo: boolean;
+
+  @Prop()
+  justDocumentoRespaldo: string;
+
+  @Prop({ required: true })
+  noAceptaIndicaciones: boolean;
+
+  @Prop()
+  justNoAceptaIndicaciones: string;
+
+  @Prop()
+  otro: string;
+
   
-  @Prop()
-  campus: string;
-
-  @Prop()
-  grades: number;
-
-  @Prop()
-  attendance: number;
-
-  @Prop()
-  participation: string;
-
-  @Prop()
-  other: string;
-
-  @Prop()
-  justification: string;
-
-  @Prop()
-  comprehensionProblems: string;
-
-  @Prop()
-  lackOfPriorKnowledge: string;
-
-  @Prop()
-  healthReasons: string;
-
-  @Prop()
-  socialReasons: string;
-
-  @Prop()
-  otherReasons: string;
-
-  @Prop()
-  remedialActions: string;
 }
 
+/*
+@IsBoolean()
+  asistentaSocial: boolean; 
+
+  @IsOptional()
+  @IsString()
+  justAsistentaSocial: string;
+
+  @IsOptional()
+  @IsBoolean()
+  ajusteAcademico: boolean;
+
+  @IsOptional()
+  @IsString()
+  justAjusteAcademico: string;
+
+  @IsOptional()
+  @IsBoolean()
+  documentoRespaldo: boolean;
+
+  @IsOptional()
+  @IsString()
+  justDocumentoRespaldo: string;
+
+  @IsOptional()
+  @IsBoolean()
+  noAceptaIndicaciones: boolean;
+
+  @IsOptional()
+  @IsString()
+  justNoAceptaIndicaciones: string;
+
+  @IsOptional()
+  @IsString()
+  otro: string;
+*/
 export const FollowUpSchema = SchemaFactory.createForClass(FollowUp);

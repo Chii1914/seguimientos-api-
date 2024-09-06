@@ -5,7 +5,7 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { SessionAuthGuard } from 'src/guards/session-auth.guard';
 import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { File } from 'multer';
+import { Multer } from 'multer';
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) { }
@@ -15,13 +15,15 @@ export class StudentController {
   async create(@Body() createStudentDto: CreateStudentDto) {
     return this.studentService.create(createStudentDto);
   }
+
+  /*
   @Post('files/:id')
   //@UseGuards(SessionAuthGuard)
   @UseInterceptors(AnyFilesInterceptor())
   async uploadFiles( @Param('id') id: string, @UploadedFiles() files: File[],){
     return this.studentService.saveStudentFiles(id, files);
   }
-
+  */
   @Post('add-follow-up')
   //@UseGuards(SessionAuthGuard)
   async addFollowUp(@Body() addFollowUpDto: { id: string, follow_up: CreateFollowUpDto }) {
