@@ -1,11 +1,13 @@
-import { UploadedFiles, Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
+import { UploadedFiles, Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, Res } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { SessionAuthGuard } from 'src/guards/session-auth.guard';
 import { CreateFollowUpDto } from 'src/follow-up/dto/create-follow-up.dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { Multer } from 'multer';
+import { Response } from 'express';
+
+
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) { }
@@ -16,14 +18,16 @@ export class StudentController {
     return this.studentService.create(createStudentDto);
   }
 
-  /*
+  
   @Post('files/:id')
   //@UseGuards(SessionAuthGuard)
   @UseInterceptors(AnyFilesInterceptor())
-  async uploadFiles( @Param('id') id: string, @UploadedFiles() files: File[],){
+  async uploadFiles(
+    @Param('id') id: string,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
     return this.studentService.saveStudentFiles(id, files);
   }
-  */
   @Post('add-follow-up')
   //@UseGuards(SessionAuthGuard)
   async addFollowUp(@Body() addFollowUpDto: { id: string, follow_up: CreateFollowUpDto }) {
@@ -41,9 +45,22 @@ export class StudentController {
     return this.studentService.getFilenames(id);
   }
 
-  @Get('file/:id')
-  async getFile(@Param('id') id: string, @Body() body: { filename: string }) {
-    return this.studentService.getFile(id, body.filename);
+  @Get('download/:id/:filename')
+  async getFile(
+    @Param('id') id: string,
+    @Param('filename') filename: string,
+    @Res() res: Response
+  ) {
+    const file = await this.studentService.getFile(id, filename);
+  
+    // Setting the appropriate headers for file download
+    res.set({
+      'Content-Type': 'application/octet-stream',
+      'Content-Disposition': `attachment; filename="${filename}"`,
+    });
+  
+    // Stream the file to the response
+    res.send(file);
   }
 
   @Get()

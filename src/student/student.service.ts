@@ -27,23 +27,25 @@ export class StudentService {
     return await this.studentModel.create(createStudentDto);
   }
 
-  async saveStudentFiles(id: string, files: CustomFile[]) {
+  async saveStudentFiles(id: string, files: Express.Multer.File[]) {
     try {
       const studentUploadPath = path.join(this.uploadPath, id);
-
+  
+      // Ensure the directory exists
       if (!fs.existsSync(studentUploadPath)) {
         fs.mkdirSync(studentUploadPath, { recursive: true });
       }
-
+  
+      // Save each file
       for (const file of files) {
         const filePath = path.join(studentUploadPath, file.originalname);
         fs.writeFileSync(filePath, file.buffer);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
       throw new BadRequestException('Error saving files');
     }
-
+  
     return { message: 'Student files uploaded successfully' };
   }
 
@@ -57,27 +59,28 @@ export class StudentService {
   }
 
   async getFile(id: string, filename: string) {
-    if (filename == null) {
+    if (!filename) {
       throw new BadRequestException('Filename is required');
-
     }
-    if (filename.includes('/') || filename.includes('\\')) {
+  
+    if (filename.includes('/') || filename.includes('\\') || filename.includes('..')) {
       throw new BadRequestException('Invalid filename');
-
     }
-    if (filename.includes('..')) {
-      throw new BadRequestException('Invalid filename');
-
-    }
+  
     const studentUploadPath = path.join(this.uploadPath, id);
+  
     if (!fs.existsSync(studentUploadPath)) {
       throw new NotFoundException('Student not found');
     }
+  
     const filePath = path.join(studentUploadPath, filename);
+  
     if (!fs.existsSync(filePath)) {
       throw new NotFoundException('File not found');
     }
-    return fs.readFileSync(filePath);
+  
+    // Return a read stream instead of reading the file synchronously
+    return fs.createReadStream(filePath);
   }
 
   async findAll() {

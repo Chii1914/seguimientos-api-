@@ -3,7 +3,7 @@ import { Document, Types } from 'mongoose';
 
 @Schema()
 export class FollowUp extends Document {
-  @Prop({ unique: true, required: true, default: () => new Types.ObjectId() }) 
+  @Prop({ type: Types.ObjectId, default: () => new Types.ObjectId(), unique: true })
   follow_up_id: string;
   
   @Prop({ required: true })

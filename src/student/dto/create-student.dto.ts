@@ -149,7 +149,7 @@ export class CreateStudentDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateFollowUpDto)
-  follow_ups: CreateFollowUpDto[];
+  follow_ups: CreateFollowUpDto[] = [];
 }
 export class UpdateStudentDto {
   @IsString()
