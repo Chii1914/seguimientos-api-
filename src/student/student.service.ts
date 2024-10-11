@@ -57,8 +57,7 @@ export class StudentService {
     }
     return fs.readdirSync(studentUploadPath);
   }
-
-  async getFile(id: string, filename: string) {
+  async getFile(id: string, filename: string): Promise<Buffer> {
     if (!filename) {
       throw new BadRequestException('Filename is required');
     }
@@ -78,9 +77,7 @@ export class StudentService {
     if (!fs.existsSync(filePath)) {
       throw new NotFoundException('File not found');
     }
-  
-    // Return a read stream instead of reading the file synchronously
-    return fs.createReadStream(filePath);
+    return fs.promises.readFile(filePath);
   }
 
   async findAll() {

@@ -46,21 +46,8 @@ export class StudentController {
   }
 
   @Get('download/:id/:filename')
-  async getFile(
-    @Param('id') id: string,
-    @Param('filename') filename: string,
-    @Res() res: Response
-  ) {
-    const file = await this.studentService.getFile(id, filename);
-  
-    // Setting the appropriate headers for file download
-    res.set({
-      'Content-Type': 'application/octet-stream',
-      'Content-Disposition': `attachment; filename="${filename}"`,
-    });
-  
-    // Stream the file to the response
-    res.send(file);
+  async getFile(@Param('id') id: string, @Param('filename') filename: string, @Res() res: Response) {
+    return this.studentService.getFile(id, filename);
   }
 
   @Get()
